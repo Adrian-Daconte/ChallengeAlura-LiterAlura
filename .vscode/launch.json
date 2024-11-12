@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LiteraturaApplication<literatura>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.alura.literatura.LiteraturaApplication",
+            "projectName": "literatura",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
