@@ -8,19 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public record BooksRecord(@JsonAlias("id") int id, @JsonAlias("title") String title,
                 @JsonAlias("authors") List<AuthorsRecord> authors,
                 @JsonAlias("languages") List<String> languages,
-                @JsonAlias("download_count") int dowload_count) {
+                @JsonAlias("download_count") Integer dowload_count) {
 
-        @Override
-        public String toString() {
-                return """  
-                                \n-----LIBRO-----
-                                Titulo : %s
-                                Autor: %s
-                                Idioma : %s
-                                Numero de descargas: %d    
-                                                                
-                                """.formatted( title, authors, languages, dowload_count);
-        }
+        
 
 
 }

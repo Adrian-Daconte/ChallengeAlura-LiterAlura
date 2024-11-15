@@ -5,12 +5,9 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record DataJsonRecord(@JsonAlias("results") List<BooksRecord> books) {
+public record ResponseRecord(@JsonAlias("results") List<BooksRecord> books) {
 
-    @Override
-    public String toString() {
-        return books.toString();
-    }
+    
 
 
 }
