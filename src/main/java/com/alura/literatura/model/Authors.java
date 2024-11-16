@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "authors")
 public class Authors {
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String name;
@@ -19,7 +19,9 @@ public class Authors {
     private Integer deathYear;
     @ManyToOne
     private Book book;
-    
+
+    public Authors() {}
+
     public Authors(AuthorsRecord authors) {
         this.name = authors.name();
         this.birthYear = authors.birth_year();
@@ -52,9 +54,9 @@ public class Authors {
 
     @Override
     public String toString() {
-    return """
-            %s , %d , %d
-            """.formatted(name,birthYear,deathYear);
+        return """
+                %s , %d , %d
+                """.formatted(name, birthYear, deathYear);
     }
 
     public Book getBook() {
@@ -65,7 +67,6 @@ public class Authors {
         this.book = book;
     }
 
-    
 
-    
+
 }

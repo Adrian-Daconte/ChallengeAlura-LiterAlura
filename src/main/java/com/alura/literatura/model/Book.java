@@ -20,20 +20,21 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     @Column(unique = true)
-    private String title ; 
-    @OneToMany(mappedBy = "book",cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    private String title;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Authors> authors;
-    private Integer numDowload ;
-    
+    private Integer numDowload;
+
+    public Book() {}
+
     public Book(BooksRecord book) {
         this.title = book.title();
-        this.authors = book.authors().stream()
-        .map(authorRecord -> new Authors(authorRecord))
-        .collect(Collectors.toList());
+        this.authors = book.authors().stream().map(authorRecord -> new Authors(authorRecord))
+                .collect(Collectors.toList());
         this.numDowload = book.dowload_count();
     }
 
-    
+
     public String getTitle() {
         return title;
     }
@@ -57,6 +58,7 @@ public class Book {
     public void setNumDowload(Integer numDowload) {
         this.numDowload = numDowload;
     }
+
     public Long getId() {
         return Id;
     }
@@ -70,16 +72,12 @@ public class Book {
     public String toString() {
         return """
                 \n-----LIBRO-----
-                Title : %s 
+                Title : %s
                 Authors : %s
                 Dowloads : %d
-                """.formatted(title,authors,numDowload);
+                """.formatted(title, authors, numDowload);
     }
 
 
-
-    
-
-    
 
 }

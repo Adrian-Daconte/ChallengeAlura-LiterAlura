@@ -5,10 +5,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import org.springframework.stereotype.Component;
 
 /* 
  * ApiCliente es una clase que se encarga de consumir la API 
  */
+@Component
 public class ApiClient {
     public String getData(String url){
         HttpClient client = HttpClient.newHttpClient();
