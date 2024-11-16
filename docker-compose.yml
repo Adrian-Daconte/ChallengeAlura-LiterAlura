@@ -1,13 +1,33 @@
-services:
+services:  
   alura-postgres:
-    image: postgres
-    container_name: alura-postgres
+    image: postgres:12.21
+    container_name: alura-containerDocker
     restart: always
     ports:
-      - 5432:5432
+      - "${DB_PORT:-5432}:5432"
     environment:
-      POSTGRES_USER: alura
-      POSTGRES_PASSWORD: alura1234
-      POSTGRES_DB: alura-db
+    
+      POSTGRES_USER: "${POSTGRES_USER:-alura}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-alura1234}"
+      POSTGRES_DB: "${POSTGRES_DB:-alura-db}"
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:8.13.0
+    container_name: alura-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL:-alura@alura.com}"
+      PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD:-alura}"
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    ports:
+      - "${PGADMIN_PORT:-8080}:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - alura-postgres
+
+volumes:
+  postgres_data:
+  pgadmin_data:

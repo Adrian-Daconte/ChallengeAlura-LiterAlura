@@ -2,12 +2,11 @@ package com.alura.literatura.model;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import com.alura.literatura.api.model.ResponseRecord;
 
+import com.alura.literatura.api.model.ResponseRecord;
 
 public class Response {
     private List<Book> books;
-
 
     public Response(ResponseRecord response) {
         this.books = response.books().stream().map(booksRecord -> new Book(booksRecord))
@@ -27,6 +26,4 @@ public class Response {
         return "Response [books=" + books + ", getBooks()=" + getBooks() + "]";
     }
 
-
 }
-

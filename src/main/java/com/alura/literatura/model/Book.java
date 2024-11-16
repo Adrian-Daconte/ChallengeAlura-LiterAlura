@@ -2,10 +2,14 @@ package com.alura.literatura.model;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import com.alura.literatura.api.model.BooksRecord;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,16 +28,23 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Authors> authors;
     private Integer numDowload;
+    
+    @Column(name = "language")
+    @Enumerated(EnumType.STRING)
+    private List<CategoryLanguage> categoryLanguage;
 
-    public Book() {}
+    public Book() {
+    }
 
     public Book(BooksRecord book) {
         this.title = book.title();
         this.authors = book.authors().stream().map(authorRecord -> new Authors(authorRecord))
                 .collect(Collectors.toList());
         this.numDowload = book.dowload_count();
+        this.categoryLanguage = book.languages().stream()
+                .map(CategoryLanguage::recibido)
+                .collect(Collectors.toList());
     }
-
 
     public String getTitle() {
         return title;
@@ -63,7 +74,6 @@ public class Book {
         return Id;
     }
 
-
     public void setId(Long id) {
         Id = id;
     }
@@ -75,9 +85,8 @@ public class Book {
                 Title : %s
                 Authors : %s
                 Dowloads : %d
-                """.formatted(title, authors, numDowload);
+                Categoria : %s
+                """.formatted(title, authors, numDowload, categoryLanguage);
     }
-
-
 
 }

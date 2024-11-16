@@ -9,59 +9,56 @@ import com.alura.literatura.service.SearchBookService;
 public class Main {
 
     private final SearchBookService searchBookService;
-    private final BookRepository repository;
-    private final Scanner scanner;
 
-    
+    // Constructor injectado con la dependencia de BookRepository
     public Main(SearchBookService searchBookService, BookRepository repository) {
         this.searchBookService = searchBookService;
-        this.repository = repository;
-        this.scanner = new Scanner(System.in);
     }
 
     public void menu() {
-        var opcion = -1;
-        while (opcion != 0) {
-            var menuPrint = """
+        final String MENU_OPTIONS = """
+                \n Bienvenido a LiterAlura , nuestras opciones :
 
-                    Bienvenido a LiterAlura , nuestras opciones :
+                1. Buscar
+                2. Listar
+                0. Salir \n
+                """;
 
-                    1. Buscar
-                    2. Listar
-                    0. Salir
-                    """;
+        try (Scanner scanner = new Scanner(System.in)) {
+            int opcion = -1;
 
-            System.out.println(menuPrint);
+            // Muestra el menú y espera una opción
+            do {
+                System.out.println(MENU_OPTIONS);
 
-            try {
-                opcion = Integer.parseInt(scanner.nextLine());
-                if (opcion < 0 || opcion > 2) {
-                    System.out.println("Opción fuera de rango. Por favor, elija entre 0 y 2.");
-                    continue;
+                try {
+                    opcion = scanner.nextInt();
+                    if (opcion < 0 || opcion > 2) {
+                        System.out.println("Opción fuera de rango. Por favor, elija entre 0 y 2.");
+                    } else {
+                        switch (opcion) {
+                            case 1:
+                                searchBookService.searchMethod();
+                                break;
+                            case 2:
+                                listBooksSearch();
+                                break;
+                            case 0:
+                                System.out.println("Hasta pronto, saliendo del programa...");
+                                break;
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("\n Por favor, ingrese un número válido.\n");
+                    scanner.nextLine(); // Limpia el buffer de entrada
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Por favor, ingrese un número válido.");
-                continue;
-            }
 
-            switch (opcion) {
-                case 1:
-                    searchBookService.searchMethod();
-                    break;
-                case 2:
-                    listBooksSearch();
-                    break;
-                case 0:
-                    System.out.println("Hasta pronto, saliendo del programa...");
-                    break;
-            }
+            } while (opcion != 0);
         }
     }
 
     private void listBooksSearch() {
-        // Implementa la lógica para listar los libros aquí
         System.out.println("Listando libros...");
-        // Por ejemplo:
-        // repository.findAll().forEach(System.out::println);
     }
+    
 }

@@ -1,6 +1,7 @@
 package com.alura.literatura.model;
 
 import com.alura.literatura.api.model.AuthorsRecord;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,8 @@ public class Authors {
     @ManyToOne
     private Book book;
 
-    public Authors() {}
+    public Authors() {
+    }
 
     public Authors(AuthorsRecord authors) {
         this.name = authors.name();
@@ -54,9 +56,7 @@ public class Authors {
 
     @Override
     public String toString() {
-        return """
-                %s , %d , %d
-                """.formatted(name, birthYear, deathYear);
+        return name;
     }
 
     public Book getBook() {
@@ -66,7 +66,5 @@ public class Authors {
     public void setBook(Book book) {
         this.book = book;
     }
-
-
 
 }
