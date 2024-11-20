@@ -2,7 +2,6 @@ package com.alura.literatura.main;
 
 import java.util.Scanner;
 import org.springframework.stereotype.Component;
-import com.alura.literatura.repository.BookRepository;
 import com.alura.literatura.service.SearchBookService;
 
 @Component
@@ -11,13 +10,15 @@ public class Main {
     private final SearchBookService searchBookService;
 
     // Constructor injectado con la dependencia de BookRepository
-    public Main(SearchBookService searchBookService, BookRepository repository) {
+    public Main(SearchBookService searchBookService) {
         this.searchBookService = searchBookService;
     }
 
     public void menu() {
         final String MENU_OPTIONS = """
-                \n Bienvenido a LiterAlura , nuestras opciones :
+        \n---------------------------------------------       
+        Bienvenido a LiterAlura , nuestras opciones :
+        ---------------------------------------------
 
                 1. Buscar
                 2. Listar
@@ -50,7 +51,7 @@ public class Main {
                     }
                 } catch (Exception e) {
                     System.out.println("\n Por favor, ingrese un número válido.\n");
-                    scanner.nextLine(); // Limpia el buffer de entrada
+                    scanner.nextLine().trim(); // Limpia el buffer de entrada
                 }
 
             } while (opcion != 0);

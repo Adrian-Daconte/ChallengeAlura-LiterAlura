@@ -84,3 +84,4 @@ postgres_data
 
 # Other
 HELP.md
+docker-clean.sh

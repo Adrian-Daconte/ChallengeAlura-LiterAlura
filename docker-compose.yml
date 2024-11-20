@@ -1,8 +1,7 @@
 services:  
   alura-postgres:
     image: postgres:12.21
-    container_name: alura-containerDocker
-    restart: always
+    container_name: alura
     ports:
       - "${DB_PORT:-5432}:5432"
     environment:

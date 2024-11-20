@@ -1,5 +1,6 @@
 package com.alura.literatura.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class Response {
     }
 
     public void setBooks(List<Book> books) {
-        this.books = books;
+        this.books = new ArrayList<>(books) ;
     }
 
     @Override

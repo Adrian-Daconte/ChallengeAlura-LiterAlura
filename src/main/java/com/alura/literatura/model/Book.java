@@ -23,15 +23,15 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    @Column(unique = true)
+    @Column(unique = true, columnDefinition = "TEXT")
     private String title;
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Authors> authors;
     private Integer numDowload;
-    
+
     @Column(name = "language")
     @Enumerated(EnumType.STRING)
-    private List<CategoryLanguage> categoryLanguage;
+    private CategoryLanguage categoryLanguage;
 
     public Book() {
     }
@@ -42,8 +42,10 @@ public class Book {
                 .collect(Collectors.toList());
         this.numDowload = book.dowload_count();
         this.categoryLanguage = book.languages().stream()
-                .map(CategoryLanguage::recibido)
-                .collect(Collectors.toList());
+                .map(CategoryLanguage::receivedLanguage)
+                .findFirst()
+                .orElse(CategoryLanguage.DESCONOCIDO);
+                System.out.println("Creando libro: " + this.title + " - Idioma: " + categoryLanguage);
     }
 
     public String getTitle() {
@@ -85,8 +87,16 @@ public class Book {
                 Title : %s
                 Authors : %s
                 Dowloads : %d
-                Categoria : %s
+                Idiomas : %s
                 """.formatted(title, authors, numDowload, categoryLanguage);
+    }
+
+    public CategoryLanguage getCategoryLanguage() {
+        return categoryLanguage;
+    }
+
+    public void setCategoryLanguage(CategoryLanguage categoryLanguage) {
+        this.categoryLanguage = categoryLanguage;
     }
 
 }
