@@ -1,29 +1,35 @@
 package com.alura.literatura.main;
 
 import java.util.Scanner;
+
 import org.springframework.stereotype.Component;
+
+import com.alura.literatura.service.QueryService;
 import com.alura.literatura.service.SearchBookService;
 
 @Component
 public class Main {
 
     private final SearchBookService searchBookService;
+    private final QueryService qService;
 
     // Constructor injectado con la dependencia de BookRepository
-    public Main(SearchBookService searchBookService) {
+    public Main(SearchBookService searchBookService, QueryService qService) {
         this.searchBookService = searchBookService;
+        this.qService = qService;
     }
 
     public void menu() {
         final String MENU_OPTIONS = """
-        \n---------------------------------------------       
-        Bienvenido a LiterAlura , nuestras opciones :
-        ---------------------------------------------
+                \n---------------------------------------------
+                Bienvenido a LiterAlura , nuestras opciones :
+                ---------------------------------------------
 
-                1. Buscar
-                2. Listar
-                0. Salir \n
-                """;
+                        1. Buscar
+                        2. Listar Books
+                        3. Listar Autores
+                        0. Salir \n
+                        """;
 
         try (Scanner scanner = new Scanner(System.in)) {
             int opcion = -1;
@@ -34,16 +40,19 @@ public class Main {
 
                 try {
                     opcion = scanner.nextInt();
-                    if (opcion < 0 || opcion > 2) {
-                        System.out.println("Opción fuera de rango. Por favor, elija entre 0 y 2.");
+                    if (opcion < 0 || opcion > 5) {
+                        System.out.println("Opción fuera de rango. Por favor, elija entre 0 y 5.");
                     } else {
                         switch (opcion) {
                             case 1:
                                 searchBookService.searchMethod();
                                 break;
                             case 2:
-                                listBooksSearch();
+                                qService.listBooks();
                                 break;
+                            case 3:
+                                qService.listAuthors();
+                                break ;   
                             case 0:
                                 System.out.println("Hasta pronto, saliendo del programa...");
                                 break;
@@ -58,8 +67,4 @@ public class Main {
         }
     }
 
-    private void listBooksSearch() {
-        System.out.println("Listando libros...");
-    }
-    
 }
